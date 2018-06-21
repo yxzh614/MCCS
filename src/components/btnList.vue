@@ -1,22 +1,22 @@
 <template>
   <div class="flex">
-    <div :class="{ dark : selectedBtn === 0 }" @click="selectedBtn = 0">
+    <div :class="{ dark : selectedBtn === 0 }" @click="goPage(0)">
       <img src="../assets/logo.png" alt="">
       <div>温室总览</div>
     </div>
-    <div :class="{ dark : selectedBtn === 1 }" @click="selectedBtn = 1">
+    <div :class="{ dark : selectedBtn === 1 }" @click="goPage(1)">
       <img src="../assets/logo.png" alt="">
       <div>温度设定</div>
     </div>
-    <div :class="{ dark : selectedBtn === 2 }" @click="selectedBtn = 2">
+    <div :class="{ dark : selectedBtn === 2 }" @click="goPage(2)">
       <img src="../assets/logo.png" alt="">
       <div>湿度设定</div>
     </div>
-    <div :class="{ dark : selectedBtn === 3 }" @click="selectedBtn = 3">
+    <div :class="{ dark : selectedBtn === 3 }" @click="goPage(3)">
       <img src="../assets/logo.png" alt="">
       <div>注水设定</div>
     </div>
-    <div :class="{ dark : selectedBtn === 4 }" @click="selectedBtn = 4">
+    <div :class="{ dark : selectedBtn === 4 }" @click="goPage(4)">
       <img src="../assets/logo.png" alt="">
       <div>设备详情</div>
     </div>
@@ -33,6 +33,18 @@ export default {
   computed: {
     selected1 () {
       return this.selectedBtn === 0
+    }
+  },
+  methods: {
+    goPage (index) {
+      this.selectedBtn = index
+      switch (index) {
+        case 0: this.$router.push({name: 'controlBoard'}); break
+        case 1: this.$router.push({name: 'water'}); break
+        case 2: this.$router.push({name: 'water'}); break
+        case 3: this.$router.push({name: 'water'}); break
+        case 4: this.$router.push({name: 'water'}); break
+      }
     }
   }
 }

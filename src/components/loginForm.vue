@@ -6,7 +6,7 @@
     <div style="width: 4em;" @click="$route.path !== '/' ? $router.push({path: '/'}) : _ => {}">{{$route.path !== '/' ? '返回首页' : ''}}</div>
     <div class="empty"></div>
     <div>菌棚智能控制系统</div>
-    <div>蘑云</div>
+    <div class="strong">蘑云</div>
     <img src="../assets/logo.png" alt="">
     <login-model v-if="showLogin" @vanish="showLogin = false"></login-model>
   </div>
@@ -58,6 +58,9 @@ export default {
 img {
   width: 4vh;
   height: 4vh;
+}
+.strong {
+  font-size: 2em;
 }
 div::after {
   clear: both;

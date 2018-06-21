@@ -4,6 +4,7 @@ import controlBoard from '@/pages/controlBoard'
 import tempBoard from '@/pages/tempBoard'
 import control from '@/pages/control'
 import myIndex from '@/pages/myIndex'
+import water from '@/pages/water'
 
 Vue.use(Router)
 
@@ -23,6 +24,11 @@ export default new Router({
         name: 'tempBoard',
         path: 'tempBoard',
         component: tempBoard
+      },
+      {
+        name: 'water',
+        path: 'water',
+        component: water
       }]
     },
     {
