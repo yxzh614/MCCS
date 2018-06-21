@@ -5,13 +5,16 @@
       <li v-for="room in roomList"
           :key="room"
           :class="{ dark: selectedRoom === room }"
-          @click="selectedRoom = room"
+          @click="changeRoom(room)"
           >{{room}}号棚</li>
+          <li>
+            <input v-model="newRoomNum" v-if="showRoomSelect" @keypress="newRoom" type="text" placeholder="请输入大棚编号">
+          </li>
     </ul>
     <div>
+      <button @click="showRoomSelect = !showRoomSelect"><img src="../assets/add.png" alt=""></button>
       <button><img src="../assets/logo.png" alt=""></button>
-      <button><img src="../assets/logo.png" alt=""></button>
-      <button><img src="../assets/logo.png" alt=""></button>
+      <button @click="deleteRoom()"><img src="../assets/delete.png" alt=""></button>
     </div>
   </div>
 </template>
@@ -26,8 +29,39 @@ export default {
         3,
         4
       ],
-      selectedRoom: 0
+      selectedRoom: 1,
+      showRoomSelect: false,
+      newRoomNum: ''
     }
+  },
+  methods: {
+    changeRoom (room) {
+      this.selectedRoom = room
+      this.$emit('change', {room: this.selectedRoom})
+    },
+    newRoom (e) {
+      console.log(e)
+      if (e.charCode === 13) {
+        this.roomList.push(this.newRoomNum)
+        this.newRoomNum = ''
+        this.showRoomSelect = false
+      } else if (e.charCode < 48 || e.charCode > 57) {
+        e.preventDefault()
+      }
+    },
+    deleteRoom () {
+      let index = this.roomList.indexOf(this.selectedRoom)
+      console.log(index)
+      this.roomList.splice(index, 1)
+      if (index === this.roomList.length - 1) {
+        this.selectedRoom = this.roomList[index - 1]
+      } else {
+        this.selectedRoom = this.roomList[index]
+      }
+    }
+  },
+  mounted () {
+    this.$emit('change', {room: this.selectedRoom})
   }
 }
 </script>
@@ -89,6 +123,11 @@ ul {
 }
 li {
   height: 5vh;
+  line-height: 5vh;
+}
+input {
+  width: 70%;
+  height: 3vh;
   line-height: 5vh;
 }
 </style>

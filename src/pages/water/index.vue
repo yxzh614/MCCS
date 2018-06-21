@@ -1,40 +1,10 @@
 <template>
     <div class="main">
-      <ul>
-        <li>
-          <div>设定温度：{{temperature.setted}}°C</div>
-          <div>最高温度：{{temperature.top}}°C</div>
-          <div>平均温度：{{temperature.avg}}°C</div>
-          <div>最低温度：{{temperature.low}}°C</div>
-          <p>{{temperature.hint}}</p>
-          <img src="@/assets/success.png">
-          <div>查看详情</div>
-        </li>
-        <li>
-          <div>设定湿度：{{humidity.setted}}RH</div>
-          <div>最高湿度：{{humidity.top}}RH</div>
-          <div>平均湿度：{{humidity.avg}}RH</div>
-          <div>最低湿度：{{humidity.low}}RH</div>
-          <p>{{humidity.hint}}</p>
-          <img src="@/assets/success.png">
-          <div>查看详情</div>
-        </li>
-        <li>
-          <div>设定水量：{{water.setted}}m³</div>
-          <div>已注水量：{{water.already}}m³</div>
-          <div>还需注水：{{water.need}}m³</div>
-          <div>水箱剩余：{{water.left}}m³</div>
-          <p>{{water.hint}}</p>
-          <img src="@/assets/warning.png">
-          <div>查看详情</div>
-        </li>
-      </ul>
-      <message :room="room"></message>
+      
     </div>
 </template>
 
 <script>
-import message from './message'
 export default {
   data () {
     return {
@@ -61,9 +31,6 @@ export default {
       }
     }
   },
-  components: {
-    message
-  },
   props: [
     'room'
   ]
@@ -76,6 +43,7 @@ export default {
   border-radius: 2vh;
   width: 70vw;
   background: white;
+  height: 46vh;
 }
 ul {
   list-style: none;

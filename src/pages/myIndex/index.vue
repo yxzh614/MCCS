@@ -1,10 +1,10 @@
 <template>
-  <div>
+  <div class="main">
     <div class="left">
       <div class="lunbo">
         <img class="lunbo" src="../../assets/logo.png" alt="">
       </div>
-      <div class="btn">
+      <div class="btn" @click="goControl">
         <img src="../../assets/logo.png" alt="">
         <div>控制台</div>
       </div>
@@ -12,16 +12,30 @@
         <img src="../../assets/logo.png" alt="">
         <div>控制台</div>
       </div>
-    </div><div class="right">
-      <div>cal</div>
-      <div>wea</div>
+    </div>
+    <div class="right">
+      <div>
+        <t-calendar></t-calendar>
+      </div>
+      <div>
+        <iframe src="weather.html"></iframe>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
+import TCalendar from '@/components/Tcalander'
 export default {
-
+  name: 'asd',
+  methods: {
+    goControl () {
+      this.$router.push({path: '/control'})
+    }
+  },
+  components: {
+    TCalendar
+  }
 }
 </script>
 
@@ -29,8 +43,11 @@ export default {
 div {
   text-align: center;
 }
+.main {
+  display: flex;
+  justify-content: space-between;
+}
 .left {
-  display: inline-block;
   background: #ffffff;
   width: 70vw;
   height: 60vh;
@@ -47,8 +64,8 @@ div {
   box-sizing: border-box;
   padding-top: 2vw;
   position: relative;
-  width: 20vw;
-  height: 20vw;
+  width: 27vh;
+  height: 27vh;
   display: inline-block;
   background: #ffffff;
   border-radius: 1vh;
@@ -59,23 +76,30 @@ div {
   position: absolute;
   bottom: 0;
   width: 100%;
-  font-size: 2vw;
-  height: 4vw;
-  line-height: 4vw;
-  background: #000000;
+  font-size: 2vh;
+  height: 4vh;
+  line-height: 4vh;
+  background: #808080;
   color: white;
   border-bottom-left-radius: 1vh;
   border-bottom-right-radius: 1vh;
 }
 .btn > img {
-  width: 14vw;
-  height: 14vw;
+  width: 15vh;
+  height: 15vh;
 }
 .right {
-  vertical-align: top;
-  display: inline-block;
-  background: #ffffff;
-  width: 20vw;
+  width: 26vw;
   margin: 0 3vw;
+}
+.right > div:first-child {
+  height: 35vh;
+  padding-top: 1vh;
+  margin-bottom: 4vh;
+}
+.right > div {
+  background: #ffffff;
+  height: 20vh;
+  border-radius: 1vh;
 }
 </style>
