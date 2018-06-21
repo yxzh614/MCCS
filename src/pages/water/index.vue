@@ -1,6 +1,18 @@
 <template>
     <div class="main">
-      
+      <div class="bar">
+        <div class="label-top" :style="{margin: amountLaft}">注水进度</div>
+        <div class="warn">超量报警</div>
+        <div class="water-bar" :style="{background: waterBarBackground}"></div>
+        <div class="label-bottom" :style="{margin: targetWater}">注水标量</div>
+      </div>
+      <div class="time-pic">
+        <div id="main" style="width: 100%;height:100%;"></div>
+      </div>
+      <div class="tin-skin">
+        <div class="tin-title"><span>水箱剩余水量</span></div>
+        <div class="tin" :style="{background: tinBackground}"></div>
+      </div>
     </div>
 </template>
 
@@ -8,83 +20,139 @@
 export default {
   data () {
     return {
-      temperature: {
-        setted: 34,
-        top: 50,
-        avg: 45,
-        low: 40,
-        hint: '参数波动范围正常，无需设置'
-      },
-      humidity: {
-        setted: 34,
-        top: 50,
-        avg: 45,
-        low: 40,
-        hint: '参数波动范围正常，无需设置'
-      },
-      water: {
-        setted: 34,
-        already: 50,
-        need: 45,
-        left: 40,
-        hint: '剩余水量无法满足设定注水量，请检查水箱，并及时注水。'
-      }
+      amount: 0,
+      over: 100,
+      target: 90,
+      tinMax: 200,
+      tinAmount: 150,
+      c: null,
+      arr: []
+    }
+  },
+  computed: {
+    tinBackground () {
+      return `linear-gradient(to top, #7bb3ff ${this.tinPercent}vh, #ffffff ${this.tinPercent}vh)`
+    },
+    waterBarBackground () {
+      return `linear-gradient(to right, #7bb3ff ${this.num1}vw, #969696 ${this.num1}vw,#969696 ${this.num2}vw,#ffef29 ${this.num2}vw)`
+    },
+    amountLaft () {
+      return `0 ${this.num1 - 3}vw`
+    },
+    targetWater () {
+      return `0 ${this.num2 - 3}vw`
+    },
+    num1 () {
+      return 65 * (this.amount / this.over)
+    },
+    num2 () {
+      return 65 * (this.target / this.over)
+    },
+    tinPercent () {
+      return 30 * (this.tinAmount / this.tinMax)
     }
   },
   props: [
     'room'
-  ]
+  ],
+  mounted () {
+    console.log(this.$echarts)
+    this.amount = 0
+    this.c = this.$echarts.init(document.getElementById('main'))
+    let i = 0
+    while (i++ < 30) {
+      this.arr.push(0)
+    }
+    let xarr = []
+    i = 0
+    while (i++ < 30) {
+      xarr.push()
+    }
+    setInterval(() => {
+      if (this.amount < this.target) {
+        this.amount++
+        this.tinAmount--
+      }
+      this.arr.push(this.amount)
+      this.arr.shift()
+      this.c.setOption({
+        title: {
+          text: '注水情况',
+          textStyle: {
+            align: 'center'
+          }
+        },
+        xAxis: {
+          type: 'category',
+          data: this.arr,
+          boundaryGap: false
+        },
+        yAxis: {
+          type: 'value'
+        },
+        series: [{
+          data: this.arr,
+          type: 'line',
+          areaStyle: {}
+        }],
+        animation: false
+      })
+    }, 500)
+  }
 }
 </script>
 
 <style scoped>
 .main {
+  padding: 2vh;
   box-shadow: 0px 0px 5vw #949494;
   border-radius: 2vh;
   width: 70vw;
   background: white;
-  height: 46vh;
-}
-ul {
-  list-style: none;
-  display: inline-block;
-  padding: 3vh 0;
-  margin: 0;
-  width: 52vw;
-  height: 40vh;
-}
-li {
-  display: inline-block;
-  width: 13vw;
-  height: 39vh;
-  margin: 0 2vw;
-  box-shadow: 0px 0px 5vw #949494;
-  border-radius: 2vh;
+  height: 42vh;
   text-align: center;
 }
-li > div {
-  height: 4vh;
-  line-height: 4vh;
+.tin-skin {
+  width: 15vw;
+  margin: 0 0 0 1vw;
 }
-li > p {
-  padding: 0 1vw;
-  height: 5vh;
-  margin: 2vh 0;
-}
-li > div:first-child {
+.tin-title {
+  width: 9vw;
+  margin-left: 3vw;
   background: #949494;
-  border-top-left-radius: 2vh;
-  border-top-right-radius: 2vh;
+  border-top-left-radius: 1vh;
+  border-top-right-radius: 1vh;
   color: white;
 }
-li > div:last-child {
-  background: #949494;
-  border-bottom-left-radius: 2vh;
-  border-bottom-right-radius: 2vh;
+.tin {
+  width: 13vw;
+  height: 30vh;
+  border: 1vw solid #949494;
+  border-radius: 1vh;
+}
+.time-pic {
+  float: right;
+  width: 50vw;
+  height: 30vh;
+  margin: 3vh 1vw 0 0;
+  border: 1px solid black;
+}
+.warn {
+  float: right;
+  background: red;
+  height: 3vh;
+  line-height: 3vh;
+  padding: 0 0.2vw;
   color: white;
 }
-li > img {
-  width: 10vh;
-  height: 10vh;
+.label-top {
+  width: 6vw;
+}
+.label-bottom {
+  width: 6vw;
+}
+.water-bar {
+  height: 3vh;
+  width: 65vw;
 }
 </style>

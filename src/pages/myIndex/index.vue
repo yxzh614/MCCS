@@ -5,12 +5,12 @@
         <img class="lunbo" src="../../assets/logo.png" alt="">
       </div>
       <div class="btn" @click="goControl">
-        <img src="../../assets/logo.png" alt="">
+        <img src="../../assets/control.png" alt="">
         <div>控制台</div>
       </div>
       <div class="btn">
-        <img src="../../assets/logo.png" alt="">
-        <div>控制台</div>
+        <img src="../../assets/talk.png" alt="">
+        <div>论坛</div>
       </div>
     </div>
     <div class="right">

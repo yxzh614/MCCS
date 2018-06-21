@@ -13,7 +13,7 @@
     </ul>
     <div>
       <button @click="showRoomSelect = !showRoomSelect"><img src="../assets/add.png" alt=""></button>
-      <button><img src="../assets/logo.png" alt=""></button>
+      <button><img src="../assets/edit.png" alt=""></button>
       <button @click="deleteRoom()"><img src="../assets/delete.png" alt=""></button>
     </div>
   </div>
