@@ -97,7 +97,7 @@ export default {
         }],
         animation: false
       })
-    }, 500)
+    }, 5000)
   }
 }
 </script>
