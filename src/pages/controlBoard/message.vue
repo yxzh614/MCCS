@@ -2,7 +2,7 @@
   <div class="right">
     <div>
       <ul>
-        <li>温室编号:{{number}}</li>
+        <li>温室编号:{{room}}</li>
         <li>使用时间:{{time}}</li>
         <li>主要功能:{{feature}}</li>
       </ul>
@@ -30,7 +30,10 @@ export default {
   },
   mounted () {
     this.time = new Date().toLocaleDateString()
-  }
+  },
+  props: [
+    'room'
+  ]
 }
 </script>
 
@@ -47,6 +50,7 @@ ul {
   list-style: none;
   height: 10vh;
   margin: 3vh 0;
+  padding-left: 3vw;
 }
 li {
   color: white;

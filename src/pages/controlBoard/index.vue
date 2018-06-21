@@ -1,6 +1,6 @@
 <template>
   <div>
-    <preview></preview>
+    <preview :room="room"></preview>
   </div>
 </template>
 
@@ -9,6 +9,9 @@ import preview from '@/pages/controlBoard/preview'
 export default {
   components: {
     preview
-  }
+  },
+  props: [
+    'room'
+  ]
 }
 </script>

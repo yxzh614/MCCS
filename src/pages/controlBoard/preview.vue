@@ -7,7 +7,7 @@
           <div>平均温度：{{temperature.avg}}°C</div>
           <div>最低温度：{{temperature.low}}°C</div>
           <p>{{temperature.hint}}</p>
-          <img src="@/assets/logo.png">
+          <img src="@/assets/success.png">
           <div>查看详情</div>
         </li>
         <li>
@@ -16,7 +16,7 @@
           <div>平均湿度：{{humidity.avg}}RH</div>
           <div>最低湿度：{{humidity.low}}RH</div>
           <p>{{humidity.hint}}</p>
-          <img src="@/assets/logo.png">
+          <img src="@/assets/success.png">
           <div>查看详情</div>
         </li>
         <li>
@@ -25,11 +25,11 @@
           <div>还需注水：{{water.need}}m³</div>
           <div>水箱剩余：{{water.left}}m³</div>
           <p>{{water.hint}}</p>
-          <img src="@/assets/logo.png">
+          <img src="@/assets/warning.png">
           <div>查看详情</div>
         </li>
       </ul>
-      <message></message>
+      <message :room="room"></message>
     </div>
 </template>
 
@@ -63,7 +63,10 @@ export default {
   },
   components: {
     message
-  }
+  },
+  props: [
+    'room'
+  ]
 }
 </script>
 

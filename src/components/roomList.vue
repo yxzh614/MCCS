@@ -5,13 +5,13 @@
       <li v-for="room in roomList"
           :key="room"
           :class="{ dark: selectedRoom === room }"
-          @click="selectedRoom = room"
+          @click="changeRoom(room)"
           >{{room}}号棚</li>
     </ul>
     <div>
+      <button><img src="../assets/add.png" alt=""></button>
       <button><img src="../assets/logo.png" alt=""></button>
-      <button><img src="../assets/logo.png" alt=""></button>
-      <button><img src="../assets/logo.png" alt=""></button>
+      <button><img src="../assets/delete.png" alt=""></button>
     </div>
   </div>
 </template>
@@ -26,8 +26,17 @@ export default {
         3,
         4
       ],
-      selectedRoom: 0
+      selectedRoom: 1
     }
+  },
+  methods: {
+    changeRoom (room) {
+      this.selectedRoom = room
+      this.$emit('change', {room: this.selectedRoom})
+    }
+  },
+  mounted () {
+    this.$emit('change', {room: this.selectedRoom})
   }
 }
 </script>

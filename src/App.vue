@@ -33,4 +33,7 @@ body {
   box-sizing: border-box;
   height: 100vh;
 }
+button:focus {
+  outline: none;
+}
 </style>
