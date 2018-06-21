@@ -2,12 +2,14 @@
   <div class="main">
     <div>注册</div>
     <div @click="showLogin = true">登录</div>
-    <img src="../assets/logo.png" alt="">
-    <div style="width: 4em;" @click="$route.path !== '/' ? $router.push({path: '/'}) : _ => {}">{{$route.path !== '/' ? '返回首页' : ''}}</div>
+    <img class="logo" src="../assets/logo.png" alt="">
+    <div class="go-home" style="width: 4em;" @click="$route.path !== '/' ? $router.push({path: '/'}) : _ => {}">
+      <img v-if="$route.path !== '/'" src="../assets/home.png" alt="">
+    </div>
     <div class="empty"></div>
     <div>菌棚智能控制系统</div>
     <div class="strong">蘑云</div>
-    <img src="../assets/logo.png" alt="">
+    <img class="logo" src="../assets/logo.png" alt="">
     <login-model v-if="showLogin" @vanish="showLogin = false"></login-model>
   </div>
 </template>
@@ -45,6 +47,14 @@ export default {
   margin: -2vw -2vw 4vh -2vw;
   color: white;
 }
+.go-home {
+  height: 5vh;
+  width: 6vw;
+}
+.go-home > img {
+  height: 6vh;
+  width: 7vw;
+}
 .main > * {
   flex-grow: 1;
 }
@@ -55,7 +65,7 @@ export default {
 .empty {
   flex-grow: 20;
 }
-img {
+.logo {
   width: 4vh;
   height: 4vh;
 }
