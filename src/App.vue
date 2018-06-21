@@ -1,19 +1,20 @@
 <template>
   <div id="app">
-    <room-list></room-list>
+    <login-form></login-form>
     <router-view/>
-    <btn-list></btn-list>
   </div>
 </template>
 
 <script>
 import btnList from '@/components/btnList'
 import roomList from '@/components/roomList'
+import loginForm from '@/components/loginForm'
 export default {
   name: 'App',
   components: {
     btnList,
-    roomList
+    roomList,
+    loginForm
   }
 }
 </script>
