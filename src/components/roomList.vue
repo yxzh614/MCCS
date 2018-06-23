@@ -2,19 +2,18 @@
   <div class="main">
     <div>温室列表</div>
     <ul>
-      <li v-for="room in roomList"
-          :key="room"
-          :class="{ dark: selectedRoom === room }"
-          @click="changeRoom(room)"
-          >{{room}}号棚</li>
-          <li>
-            <input v-model="newRoomNum" v-if="showRoomSelect" @keypress="newRoom" type="text" placeholder="请输入大棚编号">
+      <li v-for="(room, index) in $rooms.roomList"
+          :key="index"
+          :class="{ dark: selectedRoomIdx === index }"
+          @click="changeRoom(index)"
+          ><span v-if="showRoomSelect !== index">{{room.id}}号棚</span>
+            <input v-model="room.id" v-if="showRoomSelect === index" @keypress="newRoom" type="text" placeholder="请输入大棚编号">
           </li>
     </ul>
     <div>
-      <button @click="showRoomSelect = !showRoomSelect"><img src="../assets/add.png" alt=""></button>
-      <button><img src="../assets/edit.png" alt=""></button>
-      <button @click="deleteRoom()"><img src="../assets/delete.png" alt=""></button>
+      <button @click="alert('请联系管理员添加温室！')"><img src="../assets/add.png" alt=""></button>
+      <button @click="showRoomSelect = selectedRoomIdx"><img src="../assets/edit.png" alt=""></button>
+      <button @click="deleteRoom"><img src="../assets/delete.png" alt=""></button>
     </div>
   </div>
 </template>
@@ -29,39 +28,50 @@ export default {
         3,
         4
       ],
-      selectedRoom: 1,
+      selectedRoomIdx: 0,
       showRoomSelect: false,
       newRoomNum: ''
     }
   },
   methods: {
+    alert (t) {
+      alert(t)
+    },
     changeRoom (room) {
-      this.selectedRoom = room
-      this.$emit('change', {room: this.selectedRoom})
+      this.selectedRoomIdx = room
+      this.$emit('change', {room: this.selectedRoomIdx})
     },
     newRoom (e) {
       console.log(e)
       if (e.charCode === 13) {
-        this.roomList.push(this.newRoomNum)
-        this.newRoomNum = ''
+        // let newRoom = {
+        //   id: Number(this.newRoomNum),
+        //   useTime: '2018-06-02',
+        //   mainFunction: '',
+        //   beizu: ''
+        // }
+        // this.roomList.push(newRoom)
+        // this.newRoomNum = ''
         this.showRoomSelect = false
       } else if (e.charCode < 48 || e.charCode > 57) {
         e.preventDefault()
       }
     },
     deleteRoom () {
-      let index = this.roomList.indexOf(this.selectedRoom)
-      console.log(index)
-      this.roomList.splice(index, 1)
-      if (index === this.roomList.length - 1) {
-        this.selectedRoom = this.roomList[index - 1]
-      } else {
-        this.selectedRoom = this.roomList[index]
+      if (confirm('确认要删除吗？')) {
+        console.log(1)
+        this.$rooms.deleteRoomByIdx(this.selectedRoomIdx)
+        if (this.selectedRoomIdx >= this.roomList.length) {
+          this.selectedRoomIdx -= 1
+        }
+        this.changeRoom(this.selectedRoomIdx - 1)
+        this.changeRoom(this.selectedRoomIdx)
       }
     }
   },
   mounted () {
-    this.$emit('change', {room: this.selectedRoom})
+    this.roomList = this.$rooms.roomList
+    this.$emit('change', {room: this.selectedRoomIdx})
   }
 }
 </script>

@@ -1,7 +1,7 @@
 <template>
   <div id="app">
-    <login-form></login-form>
-    <router-view/>
+    <login-form @login="login"></login-form>
+    <router-view :login="loged"/>
   </div>
 </template>
 
@@ -11,6 +11,17 @@ import roomList from '@/components/roomList'
 import loginForm from '@/components/loginForm'
 export default {
   name: 'App',
+  data () {
+    return {
+      loged: false
+    }
+  },
+  methods: {
+    login (e) {
+      console.log(e)
+      this.loged = e
+    }
+  },
   components: {
     btnList,
     roomList,

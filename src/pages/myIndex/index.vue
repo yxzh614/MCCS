@@ -30,12 +30,19 @@ export default {
   name: 'asd',
   methods: {
     goControl () {
-      this.$router.push({path: '/control'})
+      if (this.login) {
+        this.$router.push({path: '/control'})
+      } else {
+        alert('请先点击右上角登录！')
+      }
     }
   },
   components: {
     TCalendar
-  }
+  },
+  props: [
+    'login'
+  ]
 }
 </script>
 

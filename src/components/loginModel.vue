@@ -1,14 +1,14 @@
 <template>
   <div class="main">
     <div>
-      <button>登录</button>
+      <button @click="login">登录</button>
       <button @click="cancel">取消</button>
     </div>
     <div>
-      <input type="password" placeholder="密码">
+      <input v-model="password" type="password" placeholder="密码">
     </div>
     <div>
-      <input type="text" placeholder="账号">
+      <input v-model="username" type="text" placeholder="账号">
     </div>
     <div class="hint">
       请输入账号和密码
@@ -18,9 +18,18 @@
 
 <script>
 export default {
+  data () {
+    return {
+      username: 'asdmin',
+      password: ''
+    }
+  },
   methods: {
+    login () {
+      this.$emit('vanish', this.username)
+    },
     cancel () {
-      this.$emit('vanish')
+      this.$emit('vanish', false)
     }
   }
 }

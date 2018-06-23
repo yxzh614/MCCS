@@ -2,17 +2,16 @@
   <div class="right">
     <div>
       <ul>
-        <li>温室编号:{{room}}</li>
-        <li>使用时间:{{time}}</li>
-        <li>主要功能:{{feature}}</li>
+        <li>温室编号:{{$rooms.roomList[room].id}}</li>
+        <li>使用时间:<input :class="{editing: editing}" :readonly="!editing" type="date" v-model="time"></li>
+        <li>主要功能:<input :class="{editing: editing}" :readonly="!editing" type="text" v-model="feature"></li>
       </ul>
     </div>
     <div class="bz">
       备注：<br>
-      {{bz}}
+      <textarea id="rev" :readonly="!editing" type="plain" v-model="bz"></textarea>
       <div>
-        <button>修改</button>
-        <button>保存</button>
+        <button @click="edit">修改</button><button @click="editing = false">保存</button>
       </div>
     </div>
   </div>
@@ -22,22 +21,43 @@
 export default {
   data () {
     return {
-      number: 1,
       time: '',
       feature: '',
-      bz: '邹山咀道边棚里 一共20架。一架120联，一天产200斤左右。'
+      bz: '',
+      editing: false
     }
   },
   mounted () {
-    this.time = new Date().toLocaleDateString()
+    this.loadRoomByIdx(this.room)
+  },
+  methods: {
+    edit (e) {
+      this.editing = true
+      document.getElementById('rev').focus()
+    },
+    loadRoomByIdx (Idx) {
+      this.time = this.$rooms.roomList[Idx].useTime
+      this.bz = this.$rooms.roomList[Idx].beizu
+      this.feature = this.$rooms.roomList[Idx].mainFunction
+    }
   },
   props: [
     'room'
-  ]
+  ],
+  watch: {
+    room: function (newRoom, oldRoom) {
+      if (newRoom !== undefined) {
+        this.loadRoomByIdx(newRoom)
+      }
+    }
+  }
 }
 </script>
 
 <style scoped>
+.editing {
+  border-bottom: 1px solid black;
+}
 .right {
   background: #949494;
   float: right;
@@ -63,6 +83,22 @@ li {
   border-bottom-right-radius: 2vh;
   padding: 3vh 3vw;
 }
+textarea {
+  resize: none;
+  outline: none;
+  background: #3c3c3c;
+  border: 0;
+  color: white;
+  width: 100%;
+  height: 80%;
+}
+input {
+  resize: none;
+  outline: none;
+  background: #949494;
+  border: 0;
+  color: white;
+}
 .bz > div {
   position: absolute;
   bottom: 0;
@@ -74,7 +110,7 @@ button {
   margin: 0;
   padding: 0;
   border: 0;
-  width: 49%;
+  width: 50%;
   height: 4vh;
   background: transparent;
   color: white;

@@ -1,7 +1,9 @@
 <template>
   <div class="main">
-    <div>注册</div>
-    <div @click="showLogin = true">登录</div>
+    <div v-if="!loged" @click="sign">注册</div>
+    <div v-if="!loged" @click="showLogin = true">登录</div>
+    <div v-if="loged" @click="quit">退出</div>
+    <div v-if="loged">{{username}}</div>
     <img class="logo" src="../assets/logo.png" alt="">
     <div class="go-home" style="width: 4em;" @click="$route.path !== '/' ? $router.push({path: '/'}) : _ => {}">
       <img v-if="$route.path !== '/'" src="../assets/home.png" alt="">
@@ -10,7 +12,7 @@
     <div>菌棚智能控制系统</div>
     <div class="strong">蘑云</div>
     <img class="logo" src="../assets/logo.png" alt="">
-    <login-model v-if="showLogin" @vanish="showLogin = false"></login-model>
+    <login-model v-if="showLogin" @vanish="login"></login-model>
   </div>
 </template>
 
@@ -19,14 +21,31 @@ import loginModel from '@/components/loginModel'
 export default {
   data () {
     return {
-      username: '',
-      password: '',
-      showLogin: false
+      showLogin: false,
+      loged: false
     }
   },
   methods: {
-    login () {
-      this.$emit('login')
+    login (e) {
+      console.log(e)
+      if (e) {
+        this.showLogin = false
+        console.log(e)
+        this.loged = true
+        this.username = e
+        this.$emit('login', this.loged)
+      } else {
+        this.$emit('login', this.loged)
+      }
+    },
+    sign () {
+      alert('请联系管理员。')
+    },
+    quit () {
+      this.loged = false
+      this.$emit('login', this.loged)
+      this.loged = false
+      this.$router.push({name: 'index'})
     }
   },
   components: {

@@ -1,13 +1,13 @@
 <template>
     <div class="main">
       <ul>
-        <li>
-          <div>设定温度：{{temperature.setted}}°C</div>
-          <div>最高温度：{{temperature.top}}°C</div>
-          <div>平均温度：{{temperature.avg}}°C</div>
-          <div>最低温度：{{temperature.low}}°C</div>
-          <p>{{temperature.hint}}</p>
-          <img src="@/assets/success.png">
+        <li @click="$router.push({path: '/control/tempBoard'})">
+          <div>设定温度：{{$rooms.roomList[room].temp.set}}°C</div>
+          <div>最高温度：{{$rooms.roomList[room].temp.max}}°C</div>
+          <div>平均温度：{{$rooms.roomList[room].temp.avg}}°C</div>
+          <div>最低温度：{{$rooms.roomList[room].temp.min}}°C</div>
+          <p>{{$rooms.roomList[room].temp.state}}</p>
+          <img :src="$rooms.roomList[room].temp.pic">
           <div>查看详情</div>
         </li>
         <li>
@@ -63,6 +63,11 @@ export default {
   },
   components: {
     message
+  },
+  watch: {
+    room: function (newRoom, oldRoom) {
+      console.log(newRoom, oldRoom)
+    }
   },
   props: [
     'room'
