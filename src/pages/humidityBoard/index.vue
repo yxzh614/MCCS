@@ -1,29 +1,29 @@
 <template>
-  <div class="tempControl">
+  <div class="humiControl">
     <!-- left -->
     <div class="left">
-      <!-- tempIcons -->
-      <div class="tempIcons">
-        <!-- currentTemp -->
+      <!-- humiIcons -->
+      <div class="humiIcons">
+        <!-- currentHumi -->
         <div>
           <div>
             <div class="iconMax"></div>
-            <span>最高温度</span>
+            <span>最高湿度</span>
           </div>
           <div>
             <div class="iconMin"></div>
-            <span>最低温度</span>
+            <span>最低湿度</span>
           </div>
         </div>
-        <!-- oldTemp -->
+        <!-- oldHumi -->
         <div>
           <div>
             <div class="iconMax"></div>
-            <span>最高温度</span>
+            <span>最高湿度</span>
           </div>
           <div>
             <div class="iconMin"></div>
-            <span>最低温度</span>
+            <span>最低湿度</span>
           </div>
         </div>
       </div>
@@ -50,13 +50,13 @@
 
     <div class="echarts">
       <div
-      id="currentTemEchart"
-      ref="currentTemEchart"
+      id="currentHumiEchart"
+      ref="currentHumiEchart"
       class="echart">
       </div>
       <div
-        id="oldTemEchart"
-        ref="oldTemEchart"
+        id="oldHumiEchart"
+        ref="oldHumiEchart"
         class="echart">
         </div>
     </div>
@@ -65,24 +65,24 @@
     <div class="right">
       <!-- currentShow -->
       <div class="currentShow">
-        <p>即时最高温度:&nbsp;&nbsp;{{currentMaxTemp}}°C</p>
-        <p>即时最低温度:&nbsp;&nbsp;{{currentMinTemp}}°C</p>
-        <p>即时平均温度:&nbsp;&nbsp;{{currentAvgTemp}}°C</p>
+        <p>即时最高湿度:&nbsp;&nbsp;{{currentMaxHumi}}PH</p>
+        <p>即时最低湿度:&nbsp;&nbsp;{{currentMinHumi}}PH</p>
+        <p>即时平均湿度:&nbsp;&nbsp;{{currentAvgHumi}}PH</p>
       </div>
       <!-- control -->
       <div class="control">
-        <p>设定最高温度:&nbsp;&nbsp;<input
+        <p>设定最高湿度:&nbsp;&nbsp;<input
           v-model="controlMaxValue"
           :readOnly="myReadonly"
-          :class="{wbg : isWritable}"/>°C</p>
-        <p>设定最低温度:&nbsp;&nbsp;<input
+          :class="{wbg : isWritable}"/>PH</p>
+        <p>设定最低湿度:&nbsp;&nbsp;<input
           v-model="controlMinValue"
           :readOnly="myReadonly"
-          :class="{wbg : isWritable}"/>°C</p>
-        <p>设定平均温度:&nbsp;&nbsp;<input
+          :class="{wbg : isWritable}"/>PH</p>
+        <p>设定平均湿度:&nbsp;&nbsp;<input
           v-model="controlWantValue"
           :readOnly="myReadonly"
-          :class="{wbg : isWritable}"/>°C</p>
+          :class="{wbg : isWritable}"/>PH</p>
         <div class="buttons">
           <button @click="change">更改</button>
           <button @click="save">保存</button>
@@ -96,12 +96,12 @@
 export default {
   data () {
     return {
-      currentTemEchart: null,
-      oldTemEchart: null,
-      currentTempDataMax: [30],
-      currentTempDataMin: [20],
-      oldTempDataMax: [18],
-      oldTempDataMin: [15],
+      currentHumiEchart: null,
+      oldHumiEchart: null,
+      currentHumiDataMax: [30],
+      currentHumiDataMin: [20],
+      oldHumiDataMax: [18],
+      oldHumiDataMin: [15],
       dataValueStart: '',
       dataValueEnd: '',
       controlMaxValue: '',
@@ -112,19 +112,19 @@ export default {
     }
   },
   methods: {
-    minTempRandom () {
-      const oldNum = this.currentTempDataMin[this.currentTempDataMin.length - 1]
+    minHumiRandom () {
+      const oldNum = this.currentHumiDataMin[this.currentHumiDataMin.length - 1]
       const randomNum = parseFloat((Math.random() - 0.5).toFixed(2))
       const newNum = parseFloat((oldNum + randomNum).toFixed(2))
       return newNum
     },
-    maxTempRandom () {
-      const oldNum = this.currentTempDataMax[this.currentTempDataMax.length - 1]
+    maxHumiRandom () {
+      const oldNum = this.currentHumiDataMax[this.currentHumiDataMax.length - 1]
       const randomNum = parseFloat((Math.random() - 0.5).toFixed(2))
       const newNum = parseFloat((oldNum + randomNum).toFixed(2))
       return newNum
     },
-    oldTemRandom () {
+    oldHumiRandom () {
       const num1 = Math.floor(Math.random() * 16) + 15
       const num2 = Math.floor(Math.random() * 16) + 15
       return {
@@ -132,41 +132,41 @@ export default {
         big: num1 > num2 ? num1 : num2
       }
     },
-    currentTemRender () {
+    currentHumiRender () {
       setInterval(() => {
-        this.currentTempDataMax.shift()
-        this.currentTempDataMin.shift()
-        this.currentTempDataMax.push(this.maxTempRandom())
-        this.currentTempDataMin.push(this.minTempRandom())
-        this.currentTemEchart.setOption({
+        this.currentHumiDataMax.shift()
+        this.currentHumiDataMin.shift()
+        this.currentHumiDataMax.push(this.maxHumiRandom())
+        this.currentHumiDataMin.push(this.minHumiRandom())
+        this.currentHumiEchart.setOption({
           series: [
             {
-              data: this.currentTempDataMax
+              data: this.currentHumiDataMax
             },
             {
-              data: this.currentTempDataMin
+              data: this.currentHumiDataMin
             }
           ]
         })
       }, 5000)
     },
-    oldTemRender () {
-      let oldTempDataMax = []
-      let oldTempDataMin = []
+    oldHumiRender () {
+      let oldHumiDataMax = []
+      let oldHumiDataMin = []
       for (let index = 0; index < 10; index++) {
-        const oldTem = this.oldTemRandom()
-        oldTempDataMax.push(oldTem.big)
-        oldTempDataMin.push(oldTem.small)
+        const oldHumi = this.oldHumiRandom()
+        oldHumiDataMax.push(oldHumi.big)
+        oldHumiDataMin.push(oldHumi.small)
       }
-      this.oldTempDataMax = oldTempDataMax
-      this.oldTempDataMin = oldTempDataMin
-      this.oldTemEchart.setOption({
+      this.oldHumiDataMax = oldHumiDataMax
+      this.oldHumiDataMin = oldHumiDataMin
+      this.oldHumiEchart.setOption({
         series: [
           {
-            data: this.oldTempDataMax
+            data: this.oldHumiDataMax
           },
           {
-            data: this.oldTempDataMin
+            data: this.oldHumiDataMin
           }
         ]
       })
@@ -184,13 +184,13 @@ export default {
   },
   mounted: function () {
     for (let index = 0; index < 9; index++) {
-      this.currentTempDataMax.push(this.maxTempRandom())
-      this.currentTempDataMin.push(this.minTempRandom())
-      const oldTem = this.oldTemRandom()
-      this.oldTempDataMax.push(oldTem.big)
-      this.oldTempDataMin.push(oldTem.small)
+      this.currentHumiDataMax.push(this.maxHumiRandom())
+      this.currentHumiDataMin.push(this.minHumiRandom())
+      const oldHumi = this.oldHumiRandom()
+      this.oldHumiDataMax.push(oldHumi.big)
+      this.oldHumiDataMin.push(oldHumi.small)
     }
-    const currentTemOption = {
+    const currentHumiOption = {
       grid: {
         left: '0%',
         right: '0%',
@@ -208,20 +208,20 @@ export default {
       },
       series: [
         {
-          name: '最高温度',
-          data: this.currentTempDataMax,
+          name: '最高湿度',
+          data: this.currentHumiDataMax,
           type: 'line',
           smooth: true
         },
         {
-          name: '最低温度',
-          data: this.currentTempDataMin,
+          name: '最低湿度',
+          data: this.currentHumiDataMin,
           type: 'line',
           smooth: true
         }
       ]
     }
-    const oldTemOption = {
+    const oldHumiOption = {
       grid: {
         left: '0%',
         right: '0%',
@@ -239,44 +239,44 @@ export default {
       },
       series: [
         {
-          name: '最高温度',
-          data: this.oldTempDataMax,
+          name: '最高湿度',
+          data: this.oldHumiDataMax,
           type: 'line',
           smooth: true
         },
         {
-          name: '最低温度',
-          data: this.oldTempDataMin,
+          name: '最低湿度',
+          data: this.oldHumiDataMin,
           type: 'line',
           smooth: true
         }
       ]
     }
-    const dom1 = this.$refs.currentTemEchart
-    const dom2 = this.$refs.oldTemEchart
-    this.currentTemEchart = this.$echarts.init(dom1)
-    this.oldTemEchart = this.$echarts.init(dom2)
-    this.currentTemEchart.setOption(currentTemOption)
-    this.oldTemEchart.setOption(oldTemOption)
-    this.currentTemRender()
+    const dom1 = this.$refs.currentHumiEchart
+    const dom2 = this.$refs.oldHumiEchart
+    this.currentHumiEchart = this.$echarts.init(dom1)
+    this.oldHumiEchart = this.$echarts.init(dom2)
+    this.currentHumiEchart.setOption(currentHumiOption)
+    this.oldHumiEchart.setOption(oldHumiOption)
+    this.currentHumiRender()
   },
   computed: {
-    currentMaxTemp: function () {
-      return this.currentTempDataMax[9]
+    currentMaxHumi: function () {
+      return this.currentHumiDataMax[9]
     },
-    currentMinTemp: function () {
-      return this.currentTempDataMin[9]
+    currentMinHumi: function () {
+      return this.currentHumiDataMin[9]
     },
-    currentAvgTemp: function () {
-      return ((this.currentTempDataMin[9] + this.currentTempDataMax[9]) / 2).toFixed(2)
+    currentAvgHumi: function () {
+      return ((this.currentHumiDataMin[9] + this.currentHumiDataMax[9]) / 2).toFixed(2)
     }
   },
   watch: {
     dataValueStart: function () {
-      this.oldTemRender()
+      this.oldHumiRender()
     },
     dataValueEnd: function () {
-      this.oldTemRender()
+      this.oldHumiRender()
     }
   }
 }
@@ -290,7 +290,7 @@ export default {
   background-color: #fff !important;
   color: #000 !important;
 }
-.tempControl {
+.humiControl {
   height: 46vh;
   width: 70vw;
   display: flex;
@@ -310,7 +310,7 @@ export default {
   height: 46vh;
   width: 15vw;
 }
-.tempIcons {
+.humiIcons {
   width: 100%;
   height: 60%;
   display: flex;
@@ -318,14 +318,14 @@ export default {
   justify-content: space-between;
   padding: 10% 0 10% 26%;
 }
-.tempIcons > div > div {
+.humiIcons > div > div {
   vertical-align: middle;
 }
-.tempIcons > div > div > span {
+.humiIcons > div > div > span {
   display: inline-block;
   vertical-align: middle;
 }
-.tempIcons > div > div > div {
+.humiIcons > div > div > div {
   display: inline-block;
   height: 2.1vh;
   width: 2vw;

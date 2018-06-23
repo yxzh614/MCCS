@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import controlBoard from '@/pages/controlBoard'
 import tempBoard from '@/pages/tempBoard'
+import humidityBoard from '@/pages/humidityBoard'
 import control from '@/pages/control'
 import myIndex from '@/pages/myIndex'
 import water from '@/pages/water'
@@ -24,6 +25,11 @@ export default new Router({
         name: 'tempBoard',
         path: 'tempBoard',
         component: tempBoard
+      },
+      {
+        name: 'humidityBoard',
+        path: 'humidityBoard',
+        component: humidityBoard
       },
       {
         name: 'water',
