@@ -32,7 +32,7 @@ export default {
         case 1: this.$router.push({name: 'tempBoard'}); break
         case 2: this.$router.push({name: 'humidityBoard'}); break
         case 3: this.$router.push({name: 'water'}); break
-        case 4: this.$router.push({name: 'controlBoard'}); break
+        case 4: this.$router.push({name: 'equip'}); break
       }
     }
   }
