@@ -18,7 +18,7 @@
         <t-calendar></t-calendar>
       </div>
       <div>
-        <iframe src="weather.html"></iframe>
+        <weather></weather>
       </div>
     </div>
   </div>
@@ -26,6 +26,7 @@
 
 <script>
 import TCalendar from '@/components/Tcalander'
+import weather from '@/components/weather'
 export default {
   name: 'asd',
   methods: {
@@ -38,7 +39,8 @@ export default {
     }
   },
   components: {
-    TCalendar
+    TCalendar,
+    weather
   },
   props: [
     'login'

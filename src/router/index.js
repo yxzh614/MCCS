@@ -6,6 +6,7 @@ import humidityBoard from '@/pages/humidityBoard'
 import control from '@/pages/control'
 import myIndex from '@/pages/myIndex'
 import water from '@/pages/water'
+import equip from '@/pages/equip'
 
 Vue.use(Router)
 
@@ -35,6 +36,11 @@ export default new Router({
         name: 'water',
         path: 'water',
         component: water
+      },
+      {
+        name: 'equip',
+        path: 'equip',
+        component: equip
       }]
     },
     {

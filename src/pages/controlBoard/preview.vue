@@ -10,7 +10,7 @@
           <img :src="$rooms.roomList[room].temp.pic">
           <div>查看详情</div>
         </li>
-        <li>
+        <li @click="$router.push({path: '/control/humidityBoard'})">
           <div>设定湿度：{{humidity.setted}}RH</div>
           <div>最高湿度：{{humidity.top}}RH</div>
           <div>平均湿度：{{humidity.avg}}RH</div>
@@ -19,7 +19,7 @@
           <img src="@/assets/success.png">
           <div>查看详情</div>
         </li>
-        <li>
+        <li @click="$router.push({path: '/control/water'})">
           <div>设定水量：{{water.setted}}m³</div>
           <div>已注水量：{{water.already}}m³</div>
           <div>还需注水：{{water.need}}m³</div>

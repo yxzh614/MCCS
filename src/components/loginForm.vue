@@ -35,6 +35,7 @@ export default {
         this.username = e
         this.$emit('login', this.loged)
       } else {
+        this.showLogin = false
         this.$emit('login', this.loged)
       }
     },
